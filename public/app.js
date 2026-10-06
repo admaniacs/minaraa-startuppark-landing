@@ -81,7 +81,25 @@
   /* ---------- Mobile register bar ---------- */
   const onScroll = () => document.body.classList.toggle('show-bar', window.scrollY > 520);
   window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
+  requestAnimationFrame(onScroll); // read scroll position after the first layout, not mid-setup
+
+  /* ---------- Razorpay script, loaded on demand ---------- */
+  // Only people who reach checkout need Razorpay's ~150 KB script, so it isn't part of the initial page load.
+  let razorpayLoading = null;
+  function loadRazorpay() {
+    if (typeof window.Razorpay === 'function') return Promise.resolve();
+    if (!razorpayLoading) {
+      razorpayLoading = new Promise((resolve, reject) => {
+        const el = document.createElement('script');
+        el.src = 'https://checkout.razorpay.com/v1/checkout.js';
+        el.async = true;
+        el.onload = () => (typeof window.Razorpay === 'function' ? resolve() : reject(new Error('Razorpay unavailable')));
+        el.onerror = () => { razorpayLoading = null; el.remove(); reject(new Error('Razorpay failed to load')); };
+        document.head.append(el);
+      });
+    }
+    return razorpayLoading;
+  }
 
   /* ---------- Checkout: rendering ---------- */
   const total = () => PRICE * state.qty;
@@ -210,6 +228,7 @@
     if (k === 'phone') $('.phone', form).classList.remove('is-invalid');
     else form.elements[k].removeAttribute('aria-invalid');
   }));
+  form.addEventListener('focusin', () => loadRazorpay().catch(() => {}), { once: true });
   form.elements.waiver.addEventListener('change', () => { $('[data-err="waiver"]', form).textContent = ''; });
   $$('[data-qty]', form).forEach(b => b.addEventListener('click', () => {
     state.qty = Math.min(MAX_QTY, Math.max(1, state.qty + Number(b.dataset.qty)));
@@ -230,6 +249,7 @@
     bind('nameUpper', v.name.toUpperCase());
     payError('');
     setStep(2);
+    loadRazorpay().catch(() => {}); // warm up the payment window while they review the payment step
     // Save the lead in the background; the Pay step waits for it only to reuse the same lead id.
     // Chained so a quick edit-and-continue reuses the first lead id instead of making a second row.
     state.lead = Promise.resolve(state.lead)
@@ -251,12 +271,15 @@
 
   $('#payBtn').addEventListener('click', async () => {
     payError('');
-    if (typeof window.Razorpay !== 'function') {
+    const v = values();
+    setPaying(true);
+    try {
+      await loadRazorpay();
+    } catch {
+      setPaying(false);
       payError('The payment window could not load. Check your connection or disable content blockers, then try again.');
       return;
     }
-    const v = values();
-    setPaying(true);
     let order;
     try {
       await state.lead;
@@ -275,7 +298,7 @@
       currency: order.currency,
       name: 'MINARAA × Startup Park',
       description: `Founders, Reset Your Energy · ${v.qty} pass${v.qty > 1 ? 'es' : ''}`,
-      image: new URL('assets/minaraa-lotus.png', location.href).href,
+      image: new URL('assets/logo-square.png', location.href).href,
       prefill: { name: v.name, email: v.email, contact: '+91' + v.phone, method: state.method },
       notes: { booking_id: order.bookingId },
       theme: { color: '#2F5BFF' },
