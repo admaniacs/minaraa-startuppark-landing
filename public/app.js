@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const PRICE = 1299; // ₹ per person, GST inclusive — the server sets the real amount
+  let PRICE = 1299; // ₹ per person, GST inclusive; replaced by /api/config — the server sets the real amount
   const MAX_QTY = 4;
   const SESSION_START = new Date('2026-10-10T08:30:00+05:30');
   const SESSION_END = new Date('2026-10-10T11:00:00+05:30');
@@ -345,4 +345,7 @@
   renderRoles();
   renderMethod();
   renderSummary();
+  fetch('/api/config').then(r => r.json()).then(c => {
+    if (Number.isInteger(c.pricePaise) && c.pricePaise / 100 !== PRICE) { PRICE = c.pricePaise / 100; renderSummary(); }
+  }).catch(() => {});
 })();

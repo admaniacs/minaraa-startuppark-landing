@@ -183,3 +183,8 @@ test('reports checkout as unavailable without API keys', async () => {
   s.close();
   assert.equal(res.status, 503);
 });
+
+test('exposes the checkout price', async () => {
+  const res = await fetch(base + '/api/config');
+  assert.deepEqual(await res.json(), { pricePaise: 129900, maxQty: 4 });
+});
