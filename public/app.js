@@ -173,13 +173,15 @@
   }
 
   /* ---------- Checkout: open / close ---------- */
-  function open(opener) {
+  function open(opener, { auto = false } = {}) {
     lastOpener = opener || document.activeElement;
     checkout.hidden = false;
     document.body.classList.add('locked');
     if (state.step === 0 || state.step === 4) { state.booking = null; setStep(1); }
     else setStep(state.step);
-    setTimeout(() => (state.step === 1 ? form.elements.name : $('#payBtn')).focus({ preventScroll: true }), 50);
+    // When it opens by itself, don't focus a text field: on phones that would pop up the keyboard.
+    const target = auto ? $('.checkout__panel', checkout) : state.step === 1 ? form.elements.name : $('#payBtn');
+    setTimeout(() => target.focus({ preventScroll: true }), 50);
   }
 
   function close() {
@@ -348,4 +350,7 @@
   fetch('/api/config').then(r => r.json()).then(c => {
     if (Number.isInteger(c.pricePaise) && c.pricePaise / 100 !== PRICE) { PRICE = c.pricePaise / 100; renderSummary(); }
   }).catch(() => {});
+
+  // The registration form opens as soon as the page loads; closing it reveals the landing page.
+  open(null, { auto: true });
 })();
