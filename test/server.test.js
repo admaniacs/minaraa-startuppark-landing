@@ -4,7 +4,7 @@ import crypto from 'node:crypto';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { createApp } from '../server.js';
+import { createApp } from '../lib/app.js';
 import { createMailer } from '../lib/mailer.js';
 import { createRazorpay } from '../lib/razorpay.js';
 import { createSheets } from '../lib/sheets.js';

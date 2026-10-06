@@ -45,7 +45,17 @@ Writes to the sheet happen in the background, so a slow or unreachable sheet nev
 
 ## Deploying
 
-Any Node host works (Render, Railway, a VPS behind nginx). Set the Razorpay variables, plus the email and sheet ones above, and optionally `DATA_DIR`. If the host's disk is ephemeral, point `DATA_DIR` at a persistent volume or rely on the Razorpay Dashboard. Use `rzp_test_` keys first, then switch to live keys after Razorpay activates the account.
+### Vercel
+
+`server.js` default-exports the Express app, so Vercel's Express support runs it as one function, and `public/` is served from Vercel's CDN. Import the GitHub repo in Vercel (framework preset: Express; no build command) and add the environment variables from `.env.example` under Project → Settings → Environment Variables.
+
+On Vercel the filesystem is temporary, so `data/registrations.jsonl` (written to `/tmp`) doesn't persist between requests. Use the Google Sheet and the Razorpay Dashboard as the record of who paid. Each instance deduplicates the pass email on its own, so if the webhook and the browser confirmation hit two different instances at the same moment, a buyer can rarely get two copies. Moving the registration store to a database (such as Upstash Redis or Neon from the Vercel Marketplace) removes both caveats.
+
+### Any other Node host
+
+Render, Railway, a VPS behind nginx: run `npm start` with the same variables. Set `DATA_DIR` to a persistent disk to keep the registrations log.
+
+Use `rzp_test_` keys first, then switch to live keys after Razorpay activates the account. Then point the Razorpay webhook at `https://<your-domain>/api/razorpay/webhook`.
 
 ## Not wired up yet
 
