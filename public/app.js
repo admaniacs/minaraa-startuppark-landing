@@ -13,7 +13,7 @@
   const inr = n => '₹' + n.toLocaleString('en-IN');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  const state = { step: 0, role: ROLES[0], qty: 1, method: 'upi', booking: null };
+  const state = { step: 0, role: ROLES[0], qty: 1, method: 'upi', booking: null, leadId: null, lead: null };
   const checkout = $('#checkout');
   const form = $('#detailsForm');
   let lastOpener = null;
@@ -186,7 +186,7 @@
     if (state.step === 3) return; // never abandon a payment that is being confirmed
     checkout.hidden = true;
     document.body.classList.remove('locked');
-    if (state.step === 4) { form.reset(); state.qty = 1; state.role = ROLES[0]; renderRoles(); renderSummary(); setStep(0); }
+    if (state.step === 4) { form.reset(); state.qty = 1; state.role = ROLES[0]; state.leadId = null; state.lead = null; renderRoles(); renderSummary(); setStep(0); }
     lastOpener && lastOpener.focus && lastOpener.focus({ preventScroll: true });
   }
 
@@ -228,6 +228,12 @@
     bind('nameUpper', v.name.toUpperCase());
     payError('');
     setStep(2);
+    // Save the lead in the background; the Pay step waits for it only to reuse the same lead id.
+    // Chained so a quick edit-and-continue reuses the first lead id instead of making a second row.
+    state.lead = Promise.resolve(state.lead)
+      .then(() => postJson('/api/leads', { ...v, leadId: state.leadId }))
+      .then(r => { state.leadId = r.leadId; })
+      .catch(() => {});
   });
 
   /* ---------- Step 2: payment ---------- */
@@ -251,7 +257,8 @@
     setPaying(true);
     let order;
     try {
-      order = await postJson('/api/orders', v);
+      await state.lead;
+      order = await postJson('/api/orders', { ...v, leadId: state.leadId });
     } catch (err) {
       setPaying(false);
       if (err.data && err.data.errors && Object.keys(err.data.errors).length) { showErrors(err.data.errors); setStep(1); return; }
@@ -296,6 +303,8 @@
       bind('name', booking.name);
       bind('firstName', booking.name.split(/\s+/)[0]);
       bind('email', booking.email);
+      $('#doneEmailed').hidden = !booking.emailed;
+      $('#doneNotEmailed').hidden = booking.emailed;
       bind('qty', booking.qty);
       bind('total', inr(booking.amount / 100));
       bind('bookingId', booking.bookingId);

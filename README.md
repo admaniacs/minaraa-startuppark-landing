@@ -22,13 +22,32 @@ Needs Node 20.12+. The page is static (`public/`); the Node server serves it and
 4. **`POST /api/payments/verify`** checks the `razorpay_signature` HMAC, confirms the payment is captured or authorized for that order, and records the registration. It returns the pass with a QR code of the booking ID.
 5. **`POST /api/razorpay/webhook`** (optional, recommended) records the registration even if the buyer closes the tab before step 4. Add it in Razorpay Dashboard → Webhooks with the events `payment.captured` and `order.paid`, and put the secret in `RAZORPAY_WEBHOOK_SECRET`.
 
+After a confirmed payment the buyer is **emailed their pass**: the same blue pass as on the page, with a QR code of the booking ID and a calendar (.ics) attachment. It's sent once per order, whichever of steps 4 and 5 happens first.
+
 Confirmed registrations are appended to `data/registrations.jsonl`, one per order with no duplicates. The same details are on each order's notes in the Razorpay Dashboard.
+
+## Pass email
+
+Set the `SMTP_*` and `MAIL_FROM` variables (see `.env.example` for Gmail, Zoho, Brevo and SES settings). For Gmail, use an App Password, not your normal password. If the variables are missing, payments still work. The confirmation screen then asks the buyer to save the pass, and the sheet shows "Not configured" in the Pass email column.
+
+Send from an address on your own domain, with the provider's SPF/DKIM set up, so passes don't land in spam.
+
+## Leads in Google Sheets
+
+Every visitor who completes the details step becomes a row in the sheet, even if they never pay. Each row's Status moves **Lead → Checkout started → Paid**. Paid rows also get the booking ID, Razorpay order and payment IDs, the payment method, and whether the pass email was sent.
+
+1. Create a Google Sheet → Extensions → Apps Script, and paste in `integrations/google-sheets.gs`.
+2. Change `SECRET` in the script to a long random string.
+3. Deploy → New deployment → Web app, with Execute as **Me** and access set to **Anyone**. Copy the `/exec` URL.
+4. Set `SHEETS_WEBHOOK_URL` (the URL) and `SHEETS_SECRET` (the same string) on the server, then restart it.
+
+Writes to the sheet happen in the background, so a slow or unreachable sheet never blocks registration or payment; failures are logged. `data/registrations.jsonl` and the Razorpay Dashboard remain the record of who paid.
 
 ## Deploying
 
-Any Node host works (Render, Railway, a VPS behind nginx). Set `RAZORPAY_KEY_ID`, `RAZORPAY_KEY_SECRET` and optionally `RAZORPAY_WEBHOOK_SECRET` and `DATA_DIR`. If the host's disk is ephemeral, point `DATA_DIR` at a persistent volume or rely on the Razorpay Dashboard. Use `rzp_test_` keys first, then switch to live keys after Razorpay activates the account.
+Any Node host works (Render, Railway, a VPS behind nginx). Set the Razorpay variables, plus the email and sheet ones above, and optionally `DATA_DIR`. If the host's disk is ephemeral, point `DATA_DIR` at a persistent volume or rely on the Razorpay Dashboard. Use `rzp_test_` keys first, then switch to live keys after Razorpay activates the account.
 
 ## Not wired up yet
 
-- **Emails / WhatsApp:** the page says "Instant confirmation by email & WhatsApp", but nothing sends them yet. Razorpay can email a payment receipt (Dashboard → Settings → Email notifications). A pass email would need a mail provider.
+- **WhatsApp:** the page says "Instant confirmation by email & WhatsApp". Email is done; WhatsApp would need a WhatsApp Business API provider (for example Interakt, AiSensy or Gupshup).
 - **Copy to confirm** (carried over from the design chat): the session agenda, the MINARAA intro, the health-confirmation wording and the Startup Park LinkedIn URL were all written or guessed by the design assistant.
