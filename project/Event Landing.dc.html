@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..600&family=Manrope:wght@400;500;600;700;800&display=swap">
+<style>
+html{scroll-behavior:smooth}
+body{margin:0;background:#F4F8FF;color:#0A0C1A;font-family:Manrope,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:#1747E8;text-decoration:none}
+a:hover{color:#0B2FC4}
+input{font-family:inherit}
+@keyframes fadeUp{from{opacity:0;transform:translateY(32px)}to{opacity:1;transform:none}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes rise{0%{transform:translateY(0) scale(.6);opacity:0}10%{opacity:.9}100%{transform:translateY(-760px) scale(1.1);opacity:0}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes slowZoom{from{transform:scale(1.12)}to{transform:scale(1)}}
+@keyframes panelIn{from{opacity:0;transform:translateY(24px) scale(.98)}to{opacity:1;transform:none}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(23,71,232,.45)}50%{box-shadow:0 0 0 10px rgba(23,71,232,0)}}
+</style>
+</helmet>
+<div ref="{{ rootRef }}" data-screen-label="Landing" style="min-height:100vh;background:linear-gradient(180deg,#F7FAFF 0%,#E9F1FF 60%,#F4F8FF 100%);overflow-x:hidden">
+
+<header style="position:sticky;top:0;z-index:20;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);background:rgba(247,250,255,.78);border-bottom:1px solid rgba(10,12,26,.08)">
+  <div style="max-width:1320px;margin:0 auto;padding:14px clamp(20px,4vw,48px);display:flex;align-items:center;justify-content:space-between;gap:20px">
+    <a href="#top" style="display:flex;align-items:center;gap:16px;color:#0A0C1A">
+      <div style="display:flex;flex-direction:column;line-height:1">
+        <span style="font:800 9px/1 Manrope,sans-serif;color:#0B2FC4;margin:0 0 2px 10px">iQue</span>
+        <span style="font:800 18px/1 Manrope,sans-serif;letter-spacing:-.02em;color:#0B2FC4;border:2px solid #1747E8;border-radius:999px;padding:4px 11px">Startup Park</span>
+        <span style="font:800 7px/1 Manrope,sans-serif;letter-spacing:.1em;color:#1747E8;align-self:flex-end;margin:3px 12px 0 0">BENGALURU</span>
+      </div>
+      <div style="width:1px;height:34px;background:rgba(10,12,26,.2)"></div>
+      <img src="assets/minaraa-logo.png" alt="MINARAA" style="height:46px;width:auto;display:block">
+    </a>
+    <div style="display:flex;align-items:center;gap:28px">
+      <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
+        <nav style="display:flex;gap:28px;font:600 13px/1 Manrope,sans-serif;letter-spacing:.08em">
+          <a href="#session" style="color:#0A0C1A" style-hover="color:#1747E8">THE SESSION</a>
+          <a href="#minaraa" style="color:#0A0C1A" style-hover="color:#1747E8">MINARAA</a>
+          <a href="#pass" style="color:#0A0C1A" style-hover="color:#1747E8">PASS</a>
+        </nav>
+      </sc-if>
+      <button onClick="{{ openCheckout }}" style="border:0;cursor:pointer;background:#0A0C1A;color:#fff;font:700 12px/1 Manrope,sans-serif;letter-spacing:.18em;padding:13px 20px;border-radius:999px" style-hover="background:#1747E8">REGISTER</button>
+    </div>
+  </div>
+</header>
+
+<section id="top" style="max-width:1320px;margin:0 auto;padding:clamp(32px,6vw,72px) clamp(20px,4vw,48px) clamp(48px,7vw,96px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr));gap:clamp(32px,5vw,64px);align-items:center">
+  <div style="display:flex;flex-direction:column;gap:clamp(20px,2.6vw,30px)">
+    <div style="font:600 12px/1.4 Manrope,sans-serif;letter-spacing:.32em;color:#0A0C1A;animation:fadeUp .8s cubic-bezier(.2,.7,.2,1) .05s both"><span style="color:#1747E8">MINARAA</span> × STARTUPPARK · WELLNESS SESSION</div>
+    <h1 style="margin:0;font-family:'Bodoni Moda',serif;font-weight:500;font-size:clamp(44px,8.6vw,124px);line-height:.88;letter-spacing:-.035em;text-wrap:balance">
+      <span style="display:block;color:#0A0C1A;animation:fadeUp 1s cubic-bezier(.2,.7,.2,1) .15s both">FOUNDERS,</span>
+      <span style="display:block;color:#1747E8;animation:fadeUp 1s cubic-bezier(.2,.7,.2,1) .3s both">RESET YOUR</span>
+      <span style="display:block;color:#1747E8;animation:fadeUp 1s cubic-bezier(.2,.7,.2,1) .45s both">ENERGY</span>
+    </h1>
+    <div style="display:flex;flex-wrap:wrap;gap:.5em 1em;font:400 clamp(26px,3vw,40px)/1 'Bodoni Moda',serif;animation:fadeUp 1s cubic-bezier(.2,.7,.2,1) .6s both">
+      <span>Recover.</span><span style="font-style:italic;color:#1747E8">Refocus.</span><span>Rebuild.</span>
+    </div>
+    <div style="width:88px;height:4px;border-radius:4px;background:#1747E8;animation:fadeIn 1s ease .8s both"></div>
+    <div id="details" style="display:flex;flex-wrap:wrap;gap:20px 36px;animation:fadeUp 1s cubic-bezier(.2,.7,.2,1) .75s both;scroll-margin-top:100px">
+      <div style="display:flex;align-items:center;gap:14px">
+        <div style="width:50px;height:50px;border-radius:50%;background:#DCE7FF;display:grid;place-items:center;color:#1747E8"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="3"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg></div>
+        <div style="width:1px;height:32px;background:rgba(10,12,26,.18)"></div>
+        <div><div style="font:700 15px/1.3 Manrope,sans-serif">10 OCTOBER</div><div style="font:500 12px/1.3 Manrope,sans-serif;letter-spacing:.1em;color:#4A5068">SATURDAY</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px">
+        <div style="width:50px;height:50px;border-radius:50%;background:#DCE7FF;display:grid;place-items:center;color:#1747E8"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg></div>
+        <div style="width:1px;height:32px;background:rgba(10,12,26,.18)"></div>
+        <div><div style="font:700 15px/1.3 Manrope,sans-serif">8:30 AM</div><div style="font:500 12px/1.3 Manrope,sans-serif;letter-spacing:.1em;color:#4A5068">ONWARDS</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px">
+        <div style="width:50px;height:50px;border-radius:50%;background:#DCE7FF;display:grid;place-items:center;color:#1747E8"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21Z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg></div>
+        <div style="width:1px;height:32px;background:rgba(10,12,26,.18)"></div>
+        <div><div style="font:700 15px/1.3 Manrope,sans-serif">STARTUPPARK</div><div style="font:500 12px/1.3 Manrope,sans-serif;letter-spacing:.1em;color:#4A5068">BENGALURU</div></div>
+      </div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;align-items:stretch;gap:16px;margin-top:6px;animation:fadeUp 1s cubic-bezier(.2,.7,.2,1) .9s both">
+      <div style="background:linear-gradient(135deg,#1F56F5,#0B2FC4);color:#fff;border-radius:18px;padding:16px 28px;display:flex;flex-direction:column;justify-content:center;box-shadow:0 18px 40px -18px rgba(11,47,196,.7)">
+        <div style="font:500 44px/1 'Bodoni Moda',serif;letter-spacing:-.02em">₹1,299/-</div>
+        <div style="font:600 11px/1 Manrope,sans-serif;letter-spacing:.3em;margin-top:8px">TILL 7TH OCTOBER</div>
+      </div>
+      <button onClick="{{ openCheckout }}" style="border:0;cursor:pointer;background:#0A0C1A;color:#fff;border-radius:999px;padding:8px 8px 8px 30px;display:flex;align-items:center;gap:24px;font:600 14px/1 Manrope,sans-serif;letter-spacing:.28em;align-self:center;transition:transform .25s" style-hover="transform:translateY(-2px)">
+        REGISTER NOW
+        <span style="width:52px;height:52px;border-radius:50%;background:#1747E8;display:grid;place-items:center;animation:pulse 2.4s ease-in-out infinite"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M4 12h15M13 6l6 6-6 6"></path></svg></span>
+      </button>
+    </div>
+  </div>
+
+  <div style="position:relative;height:clamp(440px,72vh,780px);border-radius:32px;overflow:hidden;box-shadow:0 40px 80px -40px rgba(11,47,196,.55);animation:fadeIn 1.2s ease .2s both">
+    <img src="assets/hero.png" alt="Founder resting in an ice bath" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;animation:slowZoom 2.4s cubic-bezier(.2,.7,.2,1) both">
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,20,60,0) 55%,rgba(10,20,60,.45) 100%)"></div>
+    {{ bubbles }}
+    <sc-if value="{{ showCountdown }}" hint-placeholder-val="{{ true }}">
+      <div style="position:absolute;left:20px;right:20px;bottom:20px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding:16px 20px;border-radius:20px;background:rgba(255,255,255,.18);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.35);color:#fff">
+        <div style="font:600 11px/1.4 Manrope,sans-serif;letter-spacing:.24em">{{ cdLabel }}</div>
+        <div style="display:flex;gap:14px;font:500 26px/1 'Bodoni Moda',serif">
+          <sc-for list="{{ cd }}" as="u" hint-placeholder-count="4">
+            <div style="display:flex;align-items:baseline;gap:3px">{{ u.v }}<span style="font:600 10px Manrope,sans-serif;letter-spacing:.1em;opacity:.8">{{ u.k }}</span></div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+  </div>
+</section>
+
+<div style="background:#1747E8;color:#fff;padding:22px 0;overflow:hidden">{{ marquee }}</div>
+
+<section id="session" style="max-width:1320px;margin:0 auto;padding:clamp(64px,9vw,120px) clamp(20px,4vw,48px);scroll-margin-top:70px">
+  <div data-reveal="" style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:clamp(36px,5vw,56px)">
+    <div style="max-width:720px">
+      <div style="font:600 12px/1 Manrope,sans-serif;letter-spacing:.32em;color:#1747E8;margin-bottom:18px">THE SESSION</div>
+      <h2 style="margin:0;font:500 clamp(36px,5vw,64px)/1 'Bodoni Moda',serif;letter-spacing:-.025em;text-wrap:balance">One slow morning to bring your nervous system <span style="font-style:italic;color:#1747E8">back to baseline.</span></h2>
+    </div>
+    <p style="margin:0;max-width:360px;font:500 16px/1.6 Manrope,sans-serif;color:#4A5068;text-wrap:pretty">Guided breathwork, a coached cold plunge and warm recovery — built for founders who run on four hours of sleep and too much coffee.</p>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:16px">
+    <sc-for list="{{ agenda }}" as="a" hint-placeholder-count="4">
+      <div data-reveal="" style="background:#fff;border:1px solid rgba(10,12,26,.08);border-radius:24px;padding:28px 26px 30px;display:flex;flex-direction:column;gap:14px;min-height:240px;transition:box-shadow .3s,transform .3s" style-hover="box-shadow:0 24px 50px -28px rgba(11,47,196,.45)">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <span style="font:500 34px/1 'Bodoni Moda',serif;color:#1747E8">{{ a.time }}</span>
+          <span style="font:600 11px/1 Manrope,sans-serif;letter-spacing:.2em;color:#4A5068">{{ a.n }}</span>
+        </div>
+        <div style="margin-top:auto;font:700 18px/1.3 Manrope,sans-serif">{{ a.title }}</div>
+        <div style="font:500 14px/1.6 Manrope,sans-serif;color:#4A5068;text-wrap:pretty">{{ a.desc }}</div>
+      </div>
+    </sc-for>
+  </div>
+</section>
+
+<section id="minaraa" data-screen-label="Minaraa" style="position:relative;overflow:hidden;background:#fff;border-top:1px solid rgba(10,12,26,.06);border-bottom:1px solid rgba(10,12,26,.06);scroll-margin-top:70px">
+  <img src="assets/minaraa-lotus.png" alt="" style="position:absolute;right:-6%;top:50%;transform:translateY(-50%);width:min(70vw,820px);opacity:.05;pointer-events:none">
+  <div style="position:relative;max-width:1320px;margin:0 auto;padding:clamp(64px,9vw,120px) clamp(20px,4vw,48px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:clamp(40px,6vw,88px);align-items:center">
+    <div data-reveal="" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;padding:clamp(40px,6vw,72px) 24px;border-radius:32px;background:radial-gradient(120% 100% at 50% 0%,#FFFFFF 0%,#EEF4FF 55%,#DCE7FF 100%);border:1px solid rgba(23,71,232,.1)">
+      <img src="assets/minaraa-logo.png" alt="MINARAA" style="width:min(100%,360px);height:auto">
+      <div style="font:600 11px/1 Manrope,sans-serif;letter-spacing:.42em;color:#4A5068">WELLNESS · RECOVERY · BALANCE</div>
+    </div>
+    <div data-reveal="" style="display:flex;flex-direction:column;gap:24px">
+      <div style="font:600 12px/1 Manrope,sans-serif;letter-spacing:.32em;color:#1747E8">YOUR HOST</div>
+      <h2 style="margin:0;font:500 clamp(36px,5vw,64px)/1 'Bodoni Moda',serif;letter-spacing:-.025em;text-wrap:balance">Hosted by <span style="letter-spacing:.14em">MINARAA</span>, <span style="font-style:italic;color:#1747E8">where recovery is a practice.</span></h2>
+      <p style="margin:0;max-width:540px;font:500 17px/1.65 Manrope,sans-serif;color:#4A5068;text-wrap:pretty">MINARAA brings guided breathwork, cold therapy and restorative rituals to people who carry heavy loads. Every round of this session is led and supervised by the MINARAA team, paced so first-timers feel safe and regulars feel challenged.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:10px">
+        <span style="padding:10px 16px;border-radius:999px;border:1.5px solid #CBD5EA;font:600 13px Manrope,sans-serif">Guided breathwork</span>
+        <span style="padding:10px 16px;border-radius:999px;border:1.5px solid #CBD5EA;font:600 13px Manrope,sans-serif">Cold therapy</span>
+        <span style="padding:10px 16px;border-radius:999px;border:1.5px solid #CBD5EA;font:600 13px Manrope,sans-serif">Restorative rituals</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pass" style="padding:clamp(12px,2vw,24px) clamp(12px,2vw,24px) clamp(12px,2vw,24px);scroll-margin-top:70px">
+  <div style="position:relative;border-radius:36px;overflow:hidden;color:#fff;padding:clamp(56px,9vw,120px) clamp(24px,5vw,72px)">
+    <img src="assets/ice.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+    <div style="position:absolute;inset:0;background:linear-gradient(110deg,rgba(6,22,110,.92) 0%,rgba(11,47,196,.72) 50%,rgba(11,47,196,.25) 100%)"></div>
+    <div data-reveal="" style="position:relative;max-width:1180px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:40px">
+      <div style="display:flex;flex-direction:column;gap:20px;max-width:620px">
+        <img src="assets/minaraa-logo.png" alt="MINARAA" style="height:56px;width:auto;align-self:flex-start;filter:invert(1)">
+        <div style="font:600 12px/1 Manrope,sans-serif;letter-spacing:.32em">EARLY-BIRD PASS</div>
+        <div style="font:500 clamp(72px,12vw,168px)/.9 'Bodoni Moda',serif;letter-spacing:-.04em">₹1,299/-</div>
+        <div style="font:400 clamp(22px,2.4vw,30px)/1.3 'Bodoni Moda',serif;text-wrap:balance">Till 7th October. Limited spots in the plunge — <span style="font-style:italic">book yours before the ice melts.</span></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:18px;align-items:flex-start">
+        <sc-if value="{{ showCountdown }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;gap:10px">
+            <sc-for list="{{ cd }}" as="u" hint-placeholder-count="4">
+              <div style="width:72px;padding:14px 0;border-radius:16px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);text-align:center">
+                <div style="font:500 30px/1 'Bodoni Moda',serif">{{ u.v }}</div>
+                <div style="font:600 10px/1 Manrope,sans-serif;letter-spacing:.2em;margin-top:6px;opacity:.85">{{ u.kl }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+        <button onClick="{{ openCheckout }}" style="border:0;cursor:pointer;background:#fff;color:#0A0C1A;border-radius:999px;padding:8px 8px 8px 30px;display:flex;align-items:center;gap:24px;font:700 14px/1 Manrope,sans-serif;letter-spacing:.28em;transition:transform .25s" style-hover="transform:translateY(-2px)">
+          REGISTER NOW
+          <span style="width:52px;height:52px;border-radius:50%;background:#1747E8;display:grid;place-items:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M4 12h15M13 6l6 6-6 6"></path></svg></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer style="max-width:1320px;margin:0 auto;padding:36px clamp(20px,4vw,48px) 44px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;font:500 13px/1.5 Manrope,sans-serif;color:#4A5068">
+  <div style="display:flex;align-items:center;gap:14px"><span style="font:800 15px Manrope,sans-serif;color:#0B2FC4">iQue Startup Park</span><span style="width:1px;height:20px;background:rgba(10,12,26,.2)"></span><img src="assets/minaraa-logo.png" alt="MINARAA" style="height:40px;width:auto"></div>
+  <div>iQue Startup Park, Bengaluru · Saturday, 10 October · 8:30 AM</div>
+</footer>
+</div>
+
+<sc-if value="{{ open }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Checkout" style="position:fixed;inset:0;z-index:50;background:rgba(6,12,40,.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);overflow-y:auto;display:flex;justify-content:center;align-items:flex-start;padding:clamp(0px,3vw,40px);animation:fadeIn .3s ease both">
+  <div style="width:100%;max-width:1060px;background:#F6F9FF;border-radius:clamp(0px,2vw,28px);overflow:hidden;box-shadow:0 40px 100px -30px rgba(0,0,0,.5);animation:panelIn .45s cubic-bezier(.2,.7,.2,1) both">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px clamp(20px,3vw,32px);background:#fff;border-bottom:1px solid rgba(10,12,26,.08)">
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+        <span style="font:800 14px Manrope,sans-serif;color:#0B2FC4">iQue Startup Park</span><span style="width:1px;height:18px;background:rgba(10,12,26,.2)"></span><img src="assets/minaraa-logo.png" alt="MINARAA" style="height:34px;width:auto">
+      </div>
+      <button onClick="{{ close }}" aria-label="Close" style="width:40px;height:40px;border-radius:50%;border:1px solid rgba(10,12,26,.12);background:#fff;cursor:pointer;display:grid;place-items:center" style-hover="background:#EAF1FF"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0A0C1A" stroke-width="2"><path d="M5 5l14 14M19 5L5 19"></path></svg></button>
+    </div>
+
+    <sc-if value="{{ inFlow }}" hint-placeholder-val="{{ true }}">
+      <div style="padding:22px clamp(20px,3vw,32px) 0;display:flex;gap:10px;flex-wrap:wrap">
+        <sc-for list="{{ steps }}" as="s" hint-placeholder-count="3">
+          <div style="display:flex;align-items:center;gap:10px">
+            <sc-if value="{{ s.on }}"><span style="width:28px;height:28px;border-radius:50%;background:#1747E8;color:#fff;display:grid;place-items:center;font:700 12px Manrope,sans-serif">{{ s.n }}</span><span style="font:700 13px Manrope,sans-serif;letter-spacing:.06em">{{ s.label }}</span></sc-if>
+            <sc-if value="{{ s.off }}"><span style="width:28px;height:28px;border-radius:50%;border:1.5px solid rgba(10,12,26,.2);color:#4A5068;display:grid;place-items:center;font:700 12px Manrope,sans-serif">{{ s.n }}</span><span style="font:600 13px Manrope,sans-serif;letter-spacing:.06em;color:#4A5068">{{ s.label }}</span></sc-if>
+            <sc-if value="{{ s.line }}"><span style="width:36px;height:1.5px;background:rgba(10,12,26,.15)"></span></sc-if>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="display:flex;flex-wrap:wrap;gap:24px;padding:22px clamp(20px,3vw,32px) clamp(24px,3vw,32px);align-items:flex-start">
+        <div style="flex:1.6 1 400px;min-width:0;background:#fff;border:1px solid rgba(10,12,26,.08);border-radius:22px;padding:clamp(20px,3vw,32px)">
+
+          <sc-if value="{{ isDetails }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;flex-direction:column;gap:22px">
+              <div>
+                <h3 style="margin:0;font:500 32px/1.1 'Bodoni Moda',serif;letter-spacing:-.02em">Your details</h3>
+                <p style="margin:8px 0 0;font:500 14px/1.5 Manrope,sans-serif;color:#4A5068">We'll send your pass and pre-session guide to this email.</p>
+              </div>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:16px">
+                <label style="display:flex;flex-direction:column;gap:8px">
+                  <span style="font:700 11px Manrope,sans-serif;letter-spacing:.16em;color:#4A5068">FULL NAME</span>
+                  <input name="name" value="{{ form.name }}" onChange="{{ onField }}" placeholder="Aarav Mehta" autocomplete="name" style="height:50px;border:1px solid #CBD5EA;border-radius:12px;padding:0 16px;font:500 15px Manrope,sans-serif;outline:none;background:#fff" style-focus="border-color:#1747E8;box-shadow:0 0 0 4px rgba(23,71,232,.12)">
+                  <sc-if value="{{ errors.name }}"><span style="font:600 12px Manrope,sans-serif;color:#D0342C">{{ errors.name }}</span></sc-if>
+                </label>
+                <label style="display:flex;flex-direction:column;gap:8px">
+                  <span style="font:700 11px Manrope,sans-serif;letter-spacing:.16em;color:#4A5068">EMAIL</span>
+                  <input name="email" type="email" value="{{ form.email }}" onChange="{{ onField }}" placeholder="you@startup.in" autocomplete="email" style="height:50px;border:1px solid #CBD5EA;border-radius:12px;padding:0 16px;font:500 15px Manrope,sans-serif;outline:none;background:#fff" style-focus="border-color:#1747E8;box-shadow:0 0 0 4px rgba(23,71,232,.12)">
+                  <sc-if value="{{ errors.email }}"><span style="font:600 12px Manrope,sans-serif;color:#D0342C">{{ errors.email }}</span></sc-if>
+                </label>
+                <label style="display:flex;flex-direction:column;gap:8px">
+                  <span style="font:700 11px Manrope,sans-serif;letter-spacing:.16em;color:#4A5068">PHONE</span>
+                  <div style="display:flex;height:50px;border:1px solid #CBD5EA;border-radius:12px;overflow:hidden;background:#fff">
+                    <span style="display:grid;place-items:center;padding:0 14px;background:#EEF3FF;font:700 14px Manrope,sans-serif;border-right:1px solid #CBD5EA">+91</span>
+                    <input name="phone" inputmode="numeric" value="{{ form.phone }}" onChange="{{ onPhone }}" placeholder="98450 12345" autocomplete="tel-national" style="flex:1;min-width:0;border:0;padding:0 14px;font:500 15px Manrope,sans-serif;outline:none">
+                  </div>
+                  <sc-if value="{{ errors.phone }}"><span style="font:600 12px Manrope,sans-serif;color:#D0342C">{{ errors.phone }}</span></sc-if>
+                </label>
+                <label style="display:flex;flex-direction:column;gap:8px">
+                  <span style="font:700 11px Manrope,sans-serif;letter-spacing:.16em;color:#4A5068">STARTUP / COMPANY</span>
+                  <input name="company" value="{{ form.company }}" onChange="{{ onField }}" placeholder="Optional" autocomplete="organization" style="height:50px;border:1px solid #CBD5EA;border-radius:12px;padding:0 16px;font:500 15px Manrope,sans-serif;outline:none;background:#fff" style-focus="border-color:#1747E8;box-shadow:0 0 0 4px rgba(23,71,232,.12)">
+                </label>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:10px">
+                <span style="font:700 11px Manrope,sans-serif;letter-spacing:.16em;color:#4A5068">I AM A</span>
+                <div style="display:flex;flex-wrap:wrap;gap:8px">
+                  <sc-for list="{{ roles }}" as="r" hint-placeholder-count="4">
+                    <sc-if value="{{ r.on }}"><button onClick="{{ r.pick }}" style="height:42px;padding:0 18px;border-radius:999px;border:1.5px solid #1747E8;background:#1747E8;color:#fff;font:700 13px Manrope,sans-serif;cursor:pointer">{{ r.label }}</button></sc-if>
+                    <sc-if value="{{ r.off }}"><button onClick="{{ r.pick }}" style="height:42px;padding:0 18px;border-radius:999px;border:1.5px solid #CBD5EA;background:#fff;color:#0A0C1A;font:600 13px Manrope,sans-serif;cursor:pointer" style-hover="border-color:#1747E8">{{ r.label }}</button></sc-if>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:14px;padding:16px 18px;border-radius:16px;background:#EEF3FF">
+                <div><div style="font:700 14px Manrope,sans-serif">Passes</div><div style="font:500 12px Manrope,sans-serif;color:#4A5068">Bring a co-founder — up to 4 per booking</div></div>
+                <div style="display:flex;align-items:center;gap:6px;background:#fff;border-radius:999px;padding:4px;border:1px solid #CBD5EA">
+                  <button onClick="{{ dec }}" aria-label="Fewer" style="width:44px;height:44px;border-radius:50%;border:0;background:#EEF3FF;font:600 20px Manrope,sans-serif;cursor:pointer">−</button>
+                  <span style="width:36px;text-align:center;font:700 17px Manrope,sans-serif">{{ qty }}</span>
+                  <button onClick="{{ inc }}" aria-label="More" style="width:44px;height:44px;border-radius:50%;border:0;background:#1747E8;color:#fff;font:600 20px Manrope,sans-serif;cursor:pointer">+</button>
+                </div>
+              </div>
+              <label style="display:flex;gap:12px;align-items:flex-start;cursor:pointer">
+                <input type="checkbox" checked="{{ waiver }}" onChange="{{ toggleWaiver }}" style="width:20px;height:20px;margin:2px 0 0;accent-color:#1747E8;flex:none">
+                <span style="font:500 13px/1.55 Manrope,sans-serif;color:#2A2F45;text-wrap:pretty">I confirm I have no heart condition, uncontrolled blood pressure or pregnancy, and I'm fit to take part in a supervised cold plunge.</span>
+              </label>
+              <sc-if value="{{ errors.waiver }}"><span style="font:600 12px Manrope,sans-serif;color:#D0342C;margin-top:-12px">{{ errors.waiver }}</span></sc-if>
+              <button onClick="{{ goPayment }}" style="height:58px;border:0;border-radius:999px;background:#0A0C1A;color:#fff;font:700 14px Manrope,sans-serif;letter-spacing:.22em;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:14px" style-hover="background:#1747E8">CONTINUE TO PAYMENT <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M4 12h15M13 6l6 6-6 6"></path></svg></button>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isPayment }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:22px">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap">
+                <div>
+                  <h3 style="margin:0;font:500 32px/1.1 'Bodoni Moda',serif;letter-spacing:-.02em">Payment</h3>
+                  <p style="margin:8px 0 0;font:500 14px/1.5 Manrope,sans-serif;color:#4A5068">Paying as <strong style="color:#0A0C1A">{{ payerName }}</strong> · <button onClick="{{ backToDetails }}" style="border:0;background:none;padding:0;cursor:pointer;font:600 14px Manrope,sans-serif;color:#1747E8">Edit details</button></p>
+                </div>
+                <div style="display:flex;align-items:center;gap:6px;font:700 11px Manrope,sans-serif;letter-spacing:.12em;color:#1A7F4B;background:#E3F5EB;padding:8px 12px;border-radius:999px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg>SECURE CHECKOUT</div>
+              </div>
+              <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding:5px;background:#EEF3FF;border-radius:16px">
+                <sc-for list="{{ methods }}" as="m" hint-placeholder-count="4">
+                  <sc-if value="{{ m.on }}"><button onClick="{{ m.pick }}" style="height:46px;border:0;border-radius:12px;background:#fff;box-shadow:0 2px 8px rgba(11,47,196,.15);font:700 13px Manrope,sans-serif;color:#1747E8;cursor:pointer">{{ m.label }}</button></sc-if>
+                  <sc-if value="{{ m.off }}"><button onClick="{{ m.pick }}" style="height:46px;border:0;border-radius:12px;background:transparent;font:600 13px Manrope,sans-serif;color:#4A5068;cursor:pointer" style-hover="color:#0A0C1A">{{ m.label }}</button></sc-if>
+                </sc-for>
+              </div>
+
+              <sc-if value="{{ isUpi }}">
+                <div style="display:flex;flex-wrap:wrap;gap:24px;align-items:center">
+                  <div style="flex:none;width:180px;padding:14px;background:#fff;border:1px solid #CBD5EA;border-radius:18px;display:flex;flex-direction:column;align-items:center;gap:10px">
+                    <div style="width:150px;height:150px">{{ qr }}</div>
+                    <span style="font:600 11px Manrope,sans-serif;letter-spacing:.12em;color:#4A5068">SCAN WITH ANY UPI APP</span>
+                  </div>
+                  <div style="flex:1 1 240px;display:flex;flex-direction:column;gap:14px">
+                    <div style="display:flex;flex-wrap:wrap;gap:8px">
+                      <sc-for list="{{ upiApps }}" as="u" hint-placeholder-count="4">
+                        <sc-if value="{{ u.on }}"><button onClick="{{ u.pick }}" style="height:40px;padding:0 14px;border-radius:12px;border:1.5px solid #1747E8;background:#EEF3FF;font:700 13px Manrope,sans-serif;color:#1747E8;cursor:pointer">{{ u.label }}</button></sc-if>
+                        <sc-if value="{{ u.off }}"><button onClick="{{ u.pick }}" style="height:40px;padding:0 14px;border-radius:12px;border:1.5px solid #CBD5EA;background:#fff;font:600 13px Manrope,sans-serif;cursor:pointer">{{ u.label }}</button></sc-if>
+                      </sc-for>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:10px;font:600 11px Manrope,sans-serif;letter-spacing:.16em;color:#8A90A6"><span style="flex:1;height:1px;background:#DDE3F0"></span>OR PAY VIA UPI ID<span style="flex:1;height:1px;background:#DDE3F0"></span></div>
+                    <div style="display:flex;gap:8px">
+                      <input value="{{ upiId }}" onChange="{{ onUpi }}" placeholder="name@okhdfcbank" style="flex:1;min-width:0;height:50px;border:1px solid #CBD5EA;border-radius:12px;padding:0 16px;font:500 15px Manrope,sans-serif;outline:none" style-focus="border-color:#1747E8;box-shadow:0 0 0 4px rgba(23,71,232,.12)">
+                      <button style="height:50px;padding:0 16px;border-radius:12px;border:1.5px solid #1747E8;background:#fff;color:#1747E8;font:700 13px Manrope,sans-serif;cursor:pointer">Verify</button>
+                    </div>
+                  </div>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ isCard }}">
+                <div style="display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start">
+                  <div style="flex:0 1 300px;aspect-ratio:1.586;border-radius:18px;padding:20px 22px;color:#fff;background:radial-gradient(120% 140% at 0% 0%,#3D74FF 0%,#1747E8 40%,#08208F 100%);display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 24px 40px -20px rgba(11,47,196,.7)">
+                    <div style="display:flex;justify-content:space-between;align-items:center"><span style="width:40px;height:30px;border-radius:6px;background:linear-gradient(135deg,#F3DFA2,#C9A85A)"></span><span style="font:400 13px 'Bodoni Moda',serif;letter-spacing:.3em">MINARAA</span></div>
+                    <div style="font:600 19px/1 ui-monospace,Menlo,monospace;letter-spacing:.08em">{{ cardNumView }}</div>
+                    <div style="display:flex;justify-content:space-between;font:600 11px Manrope,sans-serif;letter-spacing:.12em"><span>{{ cardHolderView }}</span><span>{{ cardExpView }}</span></div>
+                  </div>
+                  <div style="flex:1 1 260px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+                    <input value="{{ card.num }}" onChange="{{ onCardNum }}" inputmode="numeric" placeholder="Card number" autocomplete="cc-number" style="grid-column:1 / -1;height:50px;border:1px solid #CBD5EA;border-radius:12px;padding:0 16px;font:500 15px Manrope,sans-serif;outline:none" style-focus="border-color:#1747E8;box-shadow:0 0 0 4px rgba(23,71,232,.12)">
+                    <input value="{{ card.holder }}" onChange="{{ onCardHolder }}" placeholder="Name on card" autocomplete="cc-name" style="grid-column:1 / -1;height:50px;border:1px solid #CBD5EA;border-radius:12px;padding:0 16px;font:500 15px Manrope,sans-serif;outline:none" style-focus="border-color:#1747E8;box-shadow:0 0 0 4px rgba(23,71,232,.12)">
+                    <input value="{{ card.exp }}" onChange="{{ onCardExp }}" inputmode="numeric" placeholder="MM / YY" autocomplete="cc-exp" style="min-width:0;height:50px;border:1px solid #CBD5EA;border-radius:12px;padding:0 16px;font:500 15px Manrope,sans-serif;outline:none" style-focus="border-color:#1747E8;box-shadow:0 0 0 4px rgba(23,71,232,.12)">
+                    <input value="{{ card.cvv }}" onChange="{{ onCardCvv }}" inputmode="numeric" type="password" placeholder="CVV" autocomplete="cc-csc" style="min-width:0;height:50px;border:1px solid #CBD5EA;border-radius:12px;padding:0 16px;font:500 15px Manrope,sans-serif;outline:none" style-focus="border-color:#1747E8;box-shadow:0 0 0 4px rgba(23,71,232,.12)">
+                    <span style="grid-column:1 / -1;font:500 12px/1.5 Manrope,sans-serif;color:#4A5068">Visa, Mastercard, RuPay &amp; Amex accepted. You may be asked for an OTP by your bank.</span>
+                  </div>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ isList }}">
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:10px">
+                  <sc-for list="{{ listItems }}" as="b" hint-placeholder-count="6">
+                    <sc-if value="{{ b.on }}"><button onClick="{{ b.pick }}" style="height:56px;display:flex;align-items:center;gap:12px;padding:0 16px;border-radius:14px;border:1.5px solid #1747E8;background:#EEF3FF;cursor:pointer;text-align:left"><span style="width:18px;height:18px;border-radius:50%;border:5px solid #1747E8;background:#fff;flex:none"></span><span style="font:700 14px Manrope,sans-serif;color:#0A0C1A">{{ b.label }}</span></button></sc-if>
+                    <sc-if value="{{ b.off }}"><button onClick="{{ b.pick }}" style="height:56px;display:flex;align-items:center;gap:12px;padding:0 16px;border-radius:14px;border:1.5px solid #DDE3F0;background:#fff;cursor:pointer;text-align:left" style-hover="border-color:#9DB4F5"><span style="width:18px;height:18px;border-radius:50%;border:1.5px solid #B4BDD3;flex:none"></span><span style="font:600 14px Manrope,sans-serif;color:#0A0C1A">{{ b.label }}</span></button></sc-if>
+                  </sc-for>
+                </div>
+              </sc-if>
+
+              <button onClick="{{ pay }}" style="height:58px;border:0;border-radius:999px;background:#1747E8;color:#fff;font:700 14px Manrope,sans-serif;letter-spacing:.2em;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:12px;box-shadow:0 18px 30px -16px rgba(23,71,232,.8)" style-hover="background:#0B2FC4"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg>PAY {{ totalStr }}</button>
+              <p style="margin:-8px 0 0;text-align:center;font:500 12px/1.5 Manrope,sans-serif;color:#8A90A6">256-bit encrypted · PCI-DSS compliant gateway · Instant confirmation by email &amp; WhatsApp</p>
+            </div>
+          </sc-if>
+        </div>
+
+        <aside style="flex:1 1 280px;min-width:0;background:#fff;border:1px solid rgba(10,12,26,.08);border-radius:22px;overflow:hidden">
+          <div style="position:relative;height:140px">
+            <img src="assets/hero.png" alt="" style="width:100%;height:100%;object-fit:cover;object-position:50% 22%">
+            <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,47,196,0) 30%,rgba(11,47,196,.75))"></div>
+            <div style="position:absolute;left:18px;bottom:14px;color:#fff;font:500 22px/1.05 'Bodoni Moda',serif">Founders, <span style="font-style:italic">reset your energy</span></div>
+          </div>
+          <div style="padding:20px 22px 24px;display:flex;flex-direction:column;gap:16px">
+            <div style="display:flex;flex-direction:column;gap:8px;font:600 13px/1.4 Manrope,sans-serif">
+              <div style="display:flex;justify-content:space-between;gap:12px"><span style="color:#4A5068">Date</span><span>Sat, 10 Oct 2026</span></div>
+              <div style="display:flex;justify-content:space-between;gap:12px"><span style="color:#4A5068">Time</span><span>8:30 AM onwards</span></div>
+              <div style="display:flex;justify-content:space-between;gap:12px"><span style="color:#4A5068">Venue</span><span>iQue Startup Park</span></div>
+            </div>
+            <div style="height:1px;background:#E3E8F3"></div>
+            <div style="display:flex;flex-direction:column;gap:8px;font:600 14px/1.4 Manrope,sans-serif">
+              <div style="display:flex;justify-content:space-between;gap:12px"><span>Early-bird pass × {{ qty }}</span><span>{{ subtotalStr }}</span></div>
+              <div style="display:flex;justify-content:space-between;gap:12px;font-weight:500;font-size:12px;color:#4A5068"><span>Incl. GST (18%)</span><span>{{ gstStr }}</span></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding-top:14px;border-top:1px dashed #CBD5EA">
+              <span style="font:700 12px Manrope,sans-serif;letter-spacing:.18em">TOTAL</span>
+              <span style="font:500 34px/1 'Bodoni Moda',serif;color:#1747E8">{{ totalStr }}</span>
+            </div>
+            <div style="font:600 11px/1.5 Manrope,sans-serif;letter-spacing:.06em;color:#1A7F4B;background:#E3F5EB;padding:10px 12px;border-radius:12px">Early-bird price locked till 7th October</div>
+          </div>
+        </aside>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isProcessing }}" hint-placeholder-val="{{ false }}">
+      <div style="padding:96px 24px;display:flex;flex-direction:column;align-items:center;gap:22px;text-align:center">
+        {{ spinner }}
+        <div style="font:500 30px/1.1 'Bodoni Moda',serif">Confirming your payment…</div>
+        <div style="font:500 14px Manrope,sans-serif;color:#4A5068">Please don't close this window or press back.</div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isDone }}" hint-placeholder-val="{{ false }}">
+      <div style="padding:clamp(28px,5vw,56px) clamp(20px,4vw,48px);display:flex;flex-direction:column;align-items:center;gap:28px">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;animation:fadeUp .7s cubic-bezier(.2,.7,.2,1) both">
+          <span style="width:64px;height:64px;border-radius:50%;background:#1747E8;display:grid;place-items:center"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></span>
+          <h3 style="margin:0;font:500 clamp(34px,5vw,52px)/1 'Bodoni Moda',serif;letter-spacing:-.02em">You're in, <span style="font-style:italic;color:#1747E8">{{ firstName }}.</span></h3>
+          <p style="margin:0;font:500 15px/1.6 Manrope,sans-serif;color:#4A5068;max-width:460px">Your pass is on its way to {{ payerEmail }}. Bring swimwear, a towel and a change of clothes.</p>
+        </div>
+        <div style="width:100%;max-width:680px;display:flex;flex-wrap:wrap;background:#fff;border-radius:24px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(11,47,196,.45);animation:fadeUp .8s cubic-bezier(.2,.7,.2,1) .15s both">
+          <div style="flex:1 1 320px;padding:26px 28px;display:flex;flex-direction:column;gap:18px;background:linear-gradient(160deg,#1F56F5,#0B2FC4);color:#fff">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><span style="font:600 11px Manrope,sans-serif;letter-spacing:.28em">WELLNESS SESSION</span><img src="assets/minaraa-logo.png" alt="MINARAA" style="height:30px;width:auto;filter:invert(1)"></div>
+            <div style="font:500 30px/1 'Bodoni Moda',serif">Founders, <span style="font-style:italic">reset your energy</span></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;font:600 13px/1.35 Manrope,sans-serif">
+              <div><div style="font-size:10px;letter-spacing:.2em;opacity:.75">DATE</div>Sat, 10 Oct</div>
+              <div><div style="font-size:10px;letter-spacing:.2em;opacity:.75">TIME</div>8:30 AM</div>
+              <div><div style="font-size:10px;letter-spacing:.2em;opacity:.75">NAME</div>{{ payerName }}</div>
+              <div><div style="font-size:10px;letter-spacing:.2em;opacity:.75">PASSES</div>{{ qty }} · {{ totalStr }}</div>
+            </div>
+          </div>
+          <div style="flex:0 0 200px;margin:0 auto;padding:24px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;border-left:2px dashed #DDE3F0">
+            <div style="width:130px;height:130px">{{ qr }}</div>
+            <span style="font:700 12px ui-monospace,Menlo,monospace;letter-spacing:.08em">MNR-1010-4827</span>
+          </div>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center">
+          <button style="height:50px;padding:0 22px;border-radius:999px;border:1.5px solid #0A0C1A;background:#fff;font:700 12px Manrope,sans-serif;letter-spacing:.16em;cursor:pointer" style-hover="background:#EEF3FF">ADD TO CALENDAR</button>
+          <button style="height:50px;padding:0 22px;border-radius:999px;border:1.5px solid #0A0C1A;background:#fff;font:700 12px Manrope,sans-serif;letter-spacing:.16em;cursor:pointer" style-hover="background:#EEF3FF">DOWNLOAD PASS</button>
+          <button onClick="{{ close }}" style="height:50px;padding:0 22px;border-radius:999px;border:0;background:#0A0C1A;color:#fff;font:700 12px Manrope,sans-serif;letter-spacing:.16em;cursor:pointer" style-hover="background:#1747E8">DONE</button>
+        </div>
+      </div>
+    </sc-if>
+  </div>
+</div>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;openOnLoad&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;none&quot;,&quot;details&quot;,&quot;payment&quot;,&quot;success&quot;],&quot;default&quot;:&quot;none&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Mockup state&quot;},&quot;ambientMotion&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Motion&quot;},&quot;showCountdown&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Content&quot;}}">
+class Component extends DCLogic {
+  state = {
+    w: typeof window !== 'undefined' ? window.innerWidth : 1280,
+    now: Date.now(), step: 0,
+    form: { name: '', email: '', phone: '', company: '' },
+    role: 'Founder', qty: 1, waiver: false, errors: {},
+    method: 'UPI', bank: 'HDFC Bank', wallet: 'Paytm', upiApp: 'Google Pay', upiId: '',
+    card: { num: '', exp: '', cvv: '', holder: '' }
+  };
+  rootRef = React.createRef();
+
+  componentDidMount() {
+    this._onResize = () => this.setState({ w: window.innerWidth });
+    window.addEventListener('resize', this._onResize);
+    this._tick = setInterval(() => this.setState({ now: Date.now() }), 1000);
+    this.applyOpen(this.props.openOnLoad);
+    setTimeout(() => this.setupReveal(), 50);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this._onResize);
+    clearInterval(this._tick); clearTimeout(this._payT);
+    this._io && this._io.disconnect();
+    document.body.style.overflow = '';
+  }
+  componentDidUpdate(prev, prevState) {
+    if (prev.openOnLoad !== this.props.openOnLoad) this.applyOpen(this.props.openOnLoad);
+    if (prev.ambientMotion !== this.props.ambientMotion) this.setupReveal();
+  }
+  setupReveal() {
+    const root = this.rootRef.current; if (!root) return;
+    this._io && this._io.disconnect();
+    const els = root.querySelectorAll('[data-reveal]');
+    if (this.props.ambientMotion === false) { els.forEach(el => { el.style.opacity = ''; el.style.transform = ''; }); return; }
+    els.forEach((el, i) => {
+      el.style.opacity = 0; el.style.transform = 'translateY(32px)';
+      el.style.transition = `opacity .9s cubic-bezier(.2,.7,.2,1) ${(i % 4) * 0.08}s, transform .9s cubic-bezier(.2,.7,.2,1) ${(i % 4) * 0.08}s, box-shadow .3s`;
+    });
+    this._io = new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting) { e.target.style.opacity = 1; e.target.style.transform = 'none'; this._io.unobserve(e.target); }
+    }), { threshold: 0.12 });
+    els.forEach(el => this._io.observe(el));
+  }
+  applyOpen(o) {
+    const demo = { name: 'Aarav Mehta', email: 'aarav@northwind.in', phone: '9845012345', company: 'Northwind Labs' };
+    if (o === 'details') this.setState({ step: 1 });
+    else if (o === 'payment') this.setState({ step: 2, form: demo, waiver: true });
+    else if (o === 'success') this.setState({ step: 4, form: demo, waiver: true, qty: 2 });
+    else this.setState({ step: 0 });
+  }
+  validate() {
+    const f = this.state.form, e = {};
+    if (!f.name.trim()) e.name = 'Please enter your name';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email)) e.email = 'Enter a valid email';
+    if (f.phone.replace(/\D/g, '').length !== 10) e.phone = 'Enter a 10-digit mobile number';
+    if (!this.state.waiver) e.waiver = 'Please confirm to continue';
+    this.setState({ errors: e });
+    return !Object.keys(e).length;
+  }
+  getBubbles() {
+    if (this.props.ambientMotion === false) return null;
+    if (this._bubbles) return this._bubbles;
+    let s = 7; const r = () => (s = (s * 9301 + 49297) % 233280) / 233280;
+    const kids = Array.from({ length: 22 }, (_, i) => {
+      const size = 6 + r() * 22, d = 7 + r() * 9;
+      return React.createElement('span', { key: i, style: {
+        position: 'absolute', left: `${r() * 100}%`, bottom: -30, width: size, height: size, borderRadius: '50%',
+        background: 'radial-gradient(circle at 30% 30%, rgba(255,255,255,.95), rgba(255,255,255,.18) 55%, rgba(255,255,255,0) 72%)',
+        border: '1px solid rgba(255,255,255,.45)', animation: `rise ${d}s linear ${-r() * d}s infinite`
+      } });
+    });
+    return (this._bubbles = React.createElement('div', { style: { position: 'absolute', inset: 0, pointerEvents: 'none', overflow: 'hidden' } }, kids));
+  }
+  getMarquee() {
+    const motion = this.props.ambientMotion !== false;
+    const key = motion ? 'm1' : 'm0';
+    if (this._mq && this._mqKey === key) return this._mq;
+    const words = ['Recover.', 'Refocus.', 'Rebuild.', 'Breathe.', 'Plunge.', 'Reset.'];
+    const item = (w, i) => React.createElement('span', { key: i, style: { display: 'inline-flex', alignItems: 'center', gap: 40, paddingRight: 40, font: `${i % 3 === 1 ? 'italic ' : ''}400 clamp(28px,3.4vw,46px)/1 'Bodoni Moda', serif`, whiteSpace: 'nowrap' } },
+      w, React.createElement('span', { style: { width: 10, height: 10, borderRadius: '50%', border: '1.5px solid rgba(255,255,255,.7)' } }));
+    const set = [...words, ...words].map(item);
+    this._mqKey = key;
+    return (this._mq = React.createElement('div', { style: { display: 'flex', width: 'max-content', animation: motion ? 'marquee 38s linear infinite' : 'none' } },
+      React.createElement('div', { style: { display: 'flex' } }, set),
+      React.createElement('div', { style: { display: 'flex' }, 'aria-hidden': true }, set.map((c, i) => React.cloneElement(c, { key: 'b' + i })))));
+  }
+  getQr() {
+    if (this._qr) return this._qr;
+    const N = 25; let s = 42; const r = () => (s = (s * 9301 + 49297) % 233280) / 233280;
+    const rects = [];
+    const finder = (x, y) => {
+      rects.push(['o', x, y, 7, 7]); rects.push(['w', x + 1, y + 1, 5, 5]); rects.push(['o', x + 2, y + 2, 3, 3]);
+    };
+    const inF = (x, y) => (x < 8 && y < 8) || (x > N - 9 && y < 8) || (x < 8 && y > N - 9);
+    for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) if (!inF(x, y) && r() > 0.52) rects.push(['o', x, y, 1, 1]);
+    finder(0, 0); finder(N - 7, 0); finder(0, N - 7);
+    return (this._qr = React.createElement('svg', { viewBox: `0 0 ${N} ${N}`, width: '100%', height: '100%', shapeRendering: 'crispEdges' },
+      rects.map((q, i) => React.createElement('rect', { key: i, x: q[1], y: q[2], width: q[3], height: q[4], fill: q[0] === 'o' ? '#0A0C1A' : '#fff' }))));
+  }
+  getSpinner() {
+    return this._sp || (this._sp = React.createElement('div', { style: { width: 64, height: 64, borderRadius: '50%', border: '4px solid #DCE7FF', borderTopColor: '#1747E8', animation: 'spin .9s linear infinite' } }));
+  }
+
+  renderVals() {
+    const st = this.state, set = o => this.setState(o);
+    if (typeof document !== 'undefined') document.body.style.overflow = st.step ? 'hidden' : '';
+    const inr = n => '₹' + n.toLocaleString('en-IN');
+    const total = 1299 * st.qty, gst = Math.round(total - total / 1.18);
+    const deadline = new Date('2026-10-07T23:59:59+05:30').getTime();
+    let diff = Math.max(0, deadline - st.now);
+    const pad = n => String(n).padStart(2, '0');
+    const d = Math.floor(diff / 864e5), h = Math.floor(diff / 36e5) % 24, m = Math.floor(diff / 6e4) % 60, sec = Math.floor(diff / 1e3) % 60;
+    const cd = [{ v: pad(d), k: 'D', kl: 'DAYS' }, { v: pad(h), k: 'H', kl: 'HRS' }, { v: pad(m), k: 'M', kl: 'MIN' }, { v: pad(sec), k: 'S', kl: 'SEC' }];
+    const pick = (arr, cur, key) => arr.map(l => ({ label: l, on: l === cur, off: l !== cur, pick: () => set({ [key]: l }) }));
+    const digits = (v, n) => v.replace(/\D/g, '').slice(0, n);
+    const cn = digits(st.card.num, 16);
+    const banks = ['HDFC Bank', 'ICICI Bank', 'State Bank of India', 'Axis Bank', 'Kotak Mahindra', 'Other banks'];
+    const wallets = ['Paytm', 'PhonePe', 'Amazon Pay', 'Mobikwik'];
+    const isNet = st.method === 'Net banking', isWallet = st.method === 'Wallets';
+    const name = st.form.name.trim() || 'Aarav Mehta';
+    return {
+      rootRef: this.rootRef,
+      wide: st.w >= 860,
+      showCountdown: this.props.showCountdown !== false,
+      cd, cdLabel: diff > 0 ? 'EARLY-BIRD ENDS IN' : 'EARLY-BIRD CLOSED',
+      bubbles: this.getBubbles(), marquee: this.getMarquee(), qr: this.getQr(), spinner: this.getSpinner(),
+      agenda: [
+        { time: '8:30', n: '01', title: 'Arrival & breathwork', desc: 'Settle in, then a guided breathing protocol to prime your body for the cold.' },
+        { time: '9:00', n: '02', title: 'Coached cold plunge', desc: 'Short, supervised ice-bath rounds — paced to your comfort, never forced.' },
+        { time: '9:30', n: '03', title: 'Warm recovery', desc: 'Mobility, stretching and slow rewarming to lock in calm and focus.' },
+        { time: '10:00', n: '04', title: 'Founder circle', desc: 'An honest conversation on energy, burnout and building sustainably.' }
+      ],
+      open: st.step > 0, inFlow: st.step === 1 || st.step === 2,
+      isDetails: st.step === 1, isPayment: st.step === 2, isProcessing: st.step === 3, isDone: st.step === 4,
+      steps: [{ n: 1, label: 'Details' }, { n: 2, label: 'Payment' }, { n: 3, label: 'Confirmed' }].map((s, i) => ({ ...s, on: st.step >= s.n, off: st.step < s.n, line: i < 2 })),
+      openCheckout: () => set({ step: 1 }),
+      close: () => { clearTimeout(this._payT); set({ step: 0 }); },
+      form: st.form, errors: st.errors, qty: st.qty, waiver: st.waiver,
+      onField: e => { const { name: k, value } = e.target; this.setState(s => ({ form: { ...s.form, [k]: value }, errors: { ...s.errors, [k]: null } })); },
+      onPhone: e => { const v = digits(e.target.value, 10); this.setState(s => ({ form: { ...s.form, phone: v }, errors: { ...s.errors, phone: null } })); },
+      roles: pick(['Founder', 'Co-founder', 'Operator', 'Investor'], st.role, 'role'),
+      dec: () => set({ qty: Math.max(1, st.qty - 1) }), inc: () => set({ qty: Math.min(4, st.qty + 1) }),
+      toggleWaiver: () => this.setState(s => ({ waiver: !s.waiver, errors: { ...s.errors, waiver: null } })),
+      goPayment: () => { if (this.validate()) set({ step: 2 }); },
+      backToDetails: () => set({ step: 1 }),
+      payerName: name, firstName: name.split(' ')[0], payerEmail: st.form.email || 'aarav@northwind.in',
+      methods: pick(['UPI', 'Card', 'Net banking', 'Wallets'], st.method, 'method'),
+      isUpi: st.method === 'UPI', isCard: st.method === 'Card', isList: isNet || isWallet,
+      listItems: isNet ? pick(banks, st.bank, 'bank') : pick(wallets, st.wallet, 'wallet'),
+      upiApps: pick(['Google Pay', 'PhonePe', 'Paytm', 'BHIM'], st.upiApp, 'upiApp'),
+      upiId: st.upiId, onUpi: e => set({ upiId: e.target.value }),
+      card: st.card,
+      onCardNum: e => { const v = digits(e.target.value, 16).replace(/(.{4})(?=.)/g, '$1 '); this.setState(s => ({ card: { ...s.card, num: v } })); },
+      onCardHolder: e => { const v = e.target.value; this.setState(s => ({ card: { ...s.card, holder: v } })); },
+      onCardExp: e => { let v = digits(e.target.value, 4); if (v.length > 2) v = v.slice(0, 2) + ' / ' + v.slice(2); this.setState(s => ({ card: { ...s.card, exp: v } })); },
+      onCardCvv: e => { const v = digits(e.target.value, 4); this.setState(s => ({ card: { ...s.card, cvv: v } })); },
+      cardNumView: (cn + '•'.repeat(16 - cn.length)).replace(/(.{4})(?=.)/g, '$1 '),
+      cardHolderView: (st.card.holder || 'YOUR NAME').toUpperCase(),
+      cardExpView: st.card.exp || 'MM / YY',
+      pay: () => { set({ step: 3 }); this._payT = setTimeout(() => this.setState({ step: 4 }), 1900); },
+      subtotalStr: inr(total), gstStr: inr(gst), totalStr: inr(total)
+    };
+  }
+}
+</script>
+</body>
+</html>
