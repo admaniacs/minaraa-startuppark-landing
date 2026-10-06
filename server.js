@@ -1,5 +1,6 @@
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import express from 'express';
 import { createApp } from './lib/app.js';
 import { createMailer } from './lib/mailer.js';
 import { createRazorpay } from './lib/razorpay.js';
@@ -26,7 +27,9 @@ if (!razorpay.configured) console.warn('RAZORPAY_KEY_ID / RAZORPAY_KEY_SECRET ar
 if (!sheets.configured) console.warn('SHEETS_WEBHOOK_URL / SHEETS_SECRET are not set — leads will not be sent to Google Sheets.');
 if (!mailer.configured) console.warn('SMTP_HOST / MAIL_FROM are not set — pass emails will not be sent.');
 
-const app = createApp({ razorpay, store, sheets, mailer });
+const app = express();
+app.disable('x-powered-by');
+app.use(createApp({ razorpay, store, sheets, mailer }));
 export default app;
 
 if (isMain) {
