@@ -45,19 +45,36 @@ Writes to the sheet happen in the background, so a slow or unreachable sheet nev
 
 ## Deploying
 
-### Vercel
+### Vercel (current setup)
 
-`server.js` default-exports the Express app, so Vercel's Express support runs it as one function, and `public/` is served from Vercel's CDN. Import the GitHub repo in Vercel (framework preset: Express; no build command) and add the environment variables from `.env.example` under Project → Settings → Environment Variables.
+Live at https://minaraa-startuppark-landing.vercel.app, deployed automatically from `main` of `admaniacs/minaraa-startuppark-landing` (Vercel team *Admaniacs*, region `bom1`). `server.js` default-exports the Express app; `public/` is served from Vercel's CDN.
 
-On Vercel the filesystem is temporary, so `data/registrations.jsonl` (written to `/tmp`) doesn't persist between requests. Use the Google Sheet and the Razorpay Dashboard as the record of who paid. Each instance deduplicates the pass email on its own, so if the webhook and the browser confirmation hit two different instances at the same moment, a buyer can rarely get two copies. Moving the registration store to a database (such as Upstash Redis or Neon from the Vercel Marketplace) removes both caveats.
+Environment variables (Project → Settings → Environment Variables): `RAZORPAY_KEY_ID`, `RAZORPAY_KEY_SECRET`, `RAZORPAY_WEBHOOK_SECRET`, `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `MAIL_FROM`, `SHEETS_WEBHOOK_URL`, `SHEETS_SECRET`, `PRICE_PAISE`. After changing any of them, redeploy (Deployments → ⋯ → Redeploy).
+
+- **Price:** `PRICE_PAISE` (129900 = ₹1,299). Set `100` for a ₹1 live test; values under 100 are ignored.
+- **Webhook:** Razorpay (Live) → Webhooks → `https://minaraa-startuppark-landing.vercel.app/api/razorpay/webhook`, events `payment.captured` and `order.paid`.
+- **Records:** Vercel's filesystem is temporary, so `data/registrations.jsonl` lives in `/tmp` and doesn't persist. The Google Sheet and the Razorpay Dashboard are the record of who paid. Moving the store to a database (Upstash Redis / Neon) would make it durable and also rule out a rare duplicate pass email if the webhook and the browser confirm on two instances at once.
+- **Caching:** pages, CSS and JS revalidate on every visit; `/assets` are cached 30 days and `/fonts` one year (see `vercel.json`). Bump `?v=` on `styles.css` / `app.js` when they change, and give changed images a new file name.
 
 ### Any other Node host
 
-Render, Railway, a VPS behind nginx: run `npm start` with the same variables. Set `DATA_DIR` to a persistent disk to keep the registrations log.
+Run `npm start` with the same variables. Set `DATA_DIR` to a persistent disk to keep the registrations log.
 
-Use `rzp_test_` keys first, then switch to live keys after Razorpay activates the account. Then point the Razorpay webhook at `https://<your-domain>/api/razorpay/webhook`.
+## Front-end notes
+
+- Plain HTML/CSS/JS in `public/`, no build step. Fonts (Gloock, Poppins, Geist Mono) are self-hosted in `public/fonts`; images are WebP in `public/assets`. The old PNGs remain only for browsers holding an old cached page.
+- Razorpay's `checkout.js` is loaded on demand when the visitor starts the form.
+- The registration form opens on page load.
+- Policy pages: `terms.html`, `privacy.html`, `refunds.html` (non-refundable, non-transferable; full refund only if the organiser cancels), `contact.html`, all naming iQue Startup Parks Private Limited.
+
+## Troubleshooting
+
+- **Leads not appearing in the Sheet:** open `SHEETS_WEBHOOK_URL` in a browser. It should show `{"ok":true,...}` (with the latest `integrations/google-sheets.gs`). A Google 404 means the URL is wrong or that deployment was removed: Deploy → Manage deployments, copy the current `/exec` URL into Vercel and redeploy. A sign-in page means access isn't set to **Anyone**. Errors show in Vercel → Logs as `sheets push … Sheet responded …`.
+- **Pass email not arriving:** the Sheet's "Pass email" column shows `Sent` or the SMTP error.
+- **"Payment blocked as website does not match":** the site's address must be approved in Razorpay → Account & Settings → Business website details.
 
 ## Not wired up yet
 
-- **WhatsApp:** the page says "Instant confirmation by email & WhatsApp". Email is done; WhatsApp would need a WhatsApp Business API provider (for example Interakt, AiSensy or Gupshup).
-- **Copy to confirm** (carried over from the design chat): the session agenda, the MINARAA intro, the health-confirmation wording and the Startup Park LinkedIn URL were all written or guessed by the design assistant.
+- **WhatsApp confirmations:** would need a WhatsApp Business API provider (for example Interakt, AiSensy or Gupshup). The page only promises email.
+- **Sales cutoff:** checkout stays open after the session starts. Close it by removing the Register buttons, or add a server-side cutoff.
+- **Copy to confirm** (from the design chat): the session agenda, the MINARAA intro and the Startup Park LinkedIn URL were written or guessed by the design assistant.

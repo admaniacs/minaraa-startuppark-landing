@@ -39,6 +39,13 @@ const COLUMNS = [
 const STATUS_RANK = { 'Lead': 1, 'Checkout started': 2, 'Paid': 3 };
 const WRITE_ONCE = ['createdAt'];
 
+// Health check: open the /exec URL in a browser. You should see {"ok":true,...}.
+// A Google "404 / page not found" means the URL is wrong or the deployment was removed;
+// a sign-in page means "Who has access" is not set to "Anyone".
+function doGet() {
+  return reply({ ok: true, sheet: SHEET_NAME, rows: Math.max(getSheet().getLastRow() - 1, 0) });
+}
+
 function doPost(e) {
   let body;
   try { body = JSON.parse(e.postData.contents); } catch (err) { return reply({ ok: false, error: 'bad json' }); }
