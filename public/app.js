@@ -79,7 +79,14 @@
   })();
 
   /* ---------- Mobile register bar ---------- */
-  const onScroll = () => document.body.classList.toggle('show-bar', window.scrollY > 520);
+  const nav = $('.nav');
+  let lastY = 0;
+  const onScroll = () => {
+    const y = window.scrollY;
+    document.body.classList.toggle('show-bar', y > 520);
+    // Phones: tuck the header away while scrolling down, bring it back on any scroll up.
+    if (Math.abs(y - lastY) > 6) { nav.classList.toggle('nav--away', y > lastY && y > 140); lastY = y; }
+  };
   window.addEventListener('scroll', onScroll, { passive: true });
   requestAnimationFrame(onScroll); // read scroll position after the first layout, not mid-setup
 
